@@ -112,7 +112,7 @@ def main():
             st.success("Done")
 
     if st.button("Llama2 Output"):
-        with st.spinner("Processing.."):
+        with st.spinner("Processing..."):
             faiss_index = FAISS.load_local("faiss_index", bedrock_embeddings)
             llm=get_llama2_llm()
             
