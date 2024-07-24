@@ -2,6 +2,7 @@ import boto3
 from botocore.config
 import json
 import response
+import datetime
 
 def blog_generate_from_bedrock(blogtopic:str)->str:
     promt=f"""<s>[INST]Human: Write a 200 words blog on topic {blogtopic}
@@ -31,8 +32,36 @@ def blog_generate_from_bedrock(blogtopic:str)->str:
         print(f'Error generating blog:{e}')
         return ""
 
+def save_blog_details_s3(s3_key, s3_bucket, generate_blog):
+    s3= boto3.client('s3')
+
+    try:
+        s3.put_object(Bucket= s3_bucket, Key= s3_key, Body= generate_blog )
+        print("code saved to S3")
+
+    except Exception as e:
+        print('Not able to save into s3 bucket:{e}')
+
+
 def lamda_handler(event, context):
     event= json.loads(event['body'])
-    blogtopic= event
+    blogtopic= event['blog_topic']
+
+    generate_blog= blog_generate_from_bedrock(blogtopic=blogtopic)
+
+    if generate_blog:
+        current_time= datetime.now().strftime("%H%M%S")
+        s3_key= f"blog-output/{current_time}.txt"
+        s3_bucket= "aws_bedrock_learn"
+        save_blog_details_s3(s3_key,s3_bucket, generate_blog)
+    else:
+        print("No blog was generated ")
+
+    return{
+        'status_code':200,
+        'body':json.dumps('Blog genration is completed')
+    }
+    
+
 
 
