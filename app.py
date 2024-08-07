@@ -5,7 +5,7 @@ import response
 import datetime
 
 def blog_generate_from_bedrock(blogtopic:str)->str:
-    promt=f"""<s>[INST]Human: Write a 200 words blog on topic {blogtopic}
+    prompt=f"""<s>[INST]Human: Write a 200 words blog on topic {blogtopic}
     Assistant:[/INST]
        """
     

@@ -27,9 +27,9 @@ bedrock_embeddings= BedrockEmbeddings(model_id="amazon.titan-embed-text-v1", cli
 
 # Data Ingestion
 def data_ingestion():
-    loader - PyPDFDirectoryLoader('CIG_EntireTariff (1)')
+    loader = PyPDFDirectoryLoader('CIG_EntireTariff (1)')
     documents= loader.load()
-    tezt_splitter= RecursiveCharacterTextSplitter(chunk_size=10000, chunk_oversize=10000)
+    text_splitter= RecursiveCharacterTextSplitter(chunk_size=10000, chunk_oversize=10000)
     docs= text_splitter.split_documents(documents)
     return docs
 
