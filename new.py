@@ -14,7 +14,7 @@ import numpy as numpy
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFDirectoryLoader
 
-# Vector Embeddings and vector store
+# Vector Embeddings and vector database
 from langchain.vectorstores import FAISS
 
 # LLM models 
